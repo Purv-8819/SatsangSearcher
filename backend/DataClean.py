@@ -26,7 +26,7 @@ for s in list:
    if index != -1:
       name:str = s[index+6 :]
       name = name.replace("||", "")
-      file2 = open("backend/storage/Vachanamrut/" + name + ".txt", "w")
+      file2 = open("backend/storage/Vachanamrut/" + name.strip() + ".txt", "w")
       file2.writelines(toAdd)
       toAdd.clear()
       count += 1

@@ -1,2 +1,4 @@
 __pycache__
 storage
+qdrant_data
+qdrant.sh
