@@ -12,9 +12,11 @@ export default function Home() {
   const [selectedPath, setSelectedPath] = useState(null);
   const [selectedText, setSelectedText] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [count, setCount] = useState(1);
 
   const handleSearch = async () => {
     const trimmed = searchTerm.trim();
+    setCount(count * -1);
     if (!trimmed) return;
 
     try {
@@ -32,6 +34,7 @@ export default function Home() {
   };
 
   const handleResultClick = async (item) => {
+    setSelectedPath("");
     setSelectedPath(item.path);
     setSelected(item.name);
     setSelectedText("Loading...");
@@ -102,46 +105,57 @@ export default function Home() {
                 No results yet. Try searching!
               </p>
             )}
-
-            {results.slice(0, 5).map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleResultClick(item)}
-                className="text-left p-4 rounded-2xl border border-amber-200 bg-amber-50 text-amber-900 font-semibold shadow-md hover:bg-amber-100 hover:shadow-lg transition transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-300 focus:outline-none"
-              >
-                {item.name}
-              </button>
-            ))}
+            <div key={count} className="flex flex-col gap-4 animate-fade-in">
+              {results.slice(0, 5).map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleResultClick(item)}
+                  className="text-left p-4 rounded-2xl border border-amber-200 bg-amber-50 text-amber-900 font-semibold shadow-md hover:bg-amber-100 hover:shadow-lg transition transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-300 focus:outline-none animate-fade-in"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* RIGHT PANEL */}
         <section
-          className={`relative w-3/5 bg-white p-10 border-l border-amber-200 flex flex-col transition-transform duration-500 ease-in-out shadow-lg
-            ${
-              selectedPath
-                ? "translate-x-0 opacity-100"
-                : "translate-x-full opacity-0 pointer-events-none"
-            }`}
+          className={`relative w-3/5 bg-white p-10 border-l border-amber-200 flex flex-col transition-all duration-500 ease-in-out`}
         >
-          <button
-            onClick={() => {
-              setSelectedPath(null);
-              setSelectedText("");
-            }}
-            className="absolute top-6 right-6 text-gray-500 hover:text-amber-600 text-3xl focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-full p-1"
-            aria-label="Close document"
-          >
-            &times;
-          </button>
+          {selectedPath ? (
+            <>
+              <button
+                onClick={() => {
+                  setSelectedPath(null);
+                  setSelectedText("");
+                }}
+                className="absolute top-6 right-6 text-gray-500 hover:text-amber-600 text-3xl focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-full p-1"
+                aria-label="Close document"
+              >
+                &times;
+              </button>
 
-          <h2 className="text-3xl font-extrabold mb-6 text-amber-900 tracking-wide select-text">
-            {selected}
-          </h2>
+              <h2 className="text-3xl font-extrabold mb-6 text-amber-900 tracking-wide select-text">
+                {selected}
+              </h2>
 
-          <div className="overflow-y-auto whitespace-pre-wrap text-gray-900 flex-grow pr-2 scrollbar-thin scrollbar-thumb-amber-400 scrollbar-track-amber-100">
-            {selectedText}
-          </div>
+              <div
+                key={selectedPath}
+                className="overflow-y-auto whitespace-pre-wrap text-gray-900 flex-grow pr-2 scrollbar-thin scrollbar-thumb-amber-400 scrollbar-track-amber-100 animate-fade-in"
+              >
+                {selectedText}
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center text-amber-400 h-full w-full animate-fadeIn">
+              <div className="text-6xl mb-4">📄</div>
+              <h3 className="text-xl font-medium">No document selected</h3>
+              <p className="text-sm text-gray-400 mt-2">
+                Search and click a result to view its content here.
+              </p>
+            </div>
+          )}
         </section>
       </div>
 
@@ -170,19 +184,21 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="w-full flex flex-col items-center gap-4 mt-16 text-center select-text">
         <a
-          className="flex items-center gap-3 text-sm text-gray-600 hover:text-amber-600 hover:underline transition"
+          className="flex items-center gap-3 text-sm bg-black/10 text-gray-600 hover:text-amber-600 hover:underline transition"
           href="https://www.baps.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden="true"
-            src="/footer.png"
-            alt="BAPS logo"
-            width={36}
-            height={36}
-            className="object-contain"
-          />
+          <div className=" bg-black/10 rounded-md p-2">
+            <Image
+              aria-hidden="true"
+              src="/footer.png"
+              alt="BAPS logo"
+              width={250}
+              height={250}
+              className="object-contain"
+            />
+          </div>
           Visit BAPS.org
         </a>
         <p className="text-xs text-gray-400">

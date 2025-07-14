@@ -20,7 +20,12 @@ def getDocs(inp:str):
     for point in search_result:
         payload = point.payload
         if payload and "path" in payload:
-            result.append({"path": payload["path"], "name" : payload["name"]})
+            content = ""
+
+            with open(payload["path"][7:],  "r") as f:
+                content = f.readline()
+
+            result.append({"path": payload["path"], "name" : content})
         else:
             result.append("No path found")
 
