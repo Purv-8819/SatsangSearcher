@@ -184,21 +184,19 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="w-full flex flex-col items-center gap-4 mt-16 text-center select-text">
         <a
-          className="flex items-center gap-3 text-sm bg-black/10 text-gray-600 hover:text-amber-600 hover:underline transition"
+          className="flex items-center gap-3 text-sm text-gray-600 hover:text-amber-600 hover:underline transition"
           href="https://www.baps.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div className=" bg-black/10 rounded-md p-2">
-            <Image
-              aria-hidden="true"
-              src="/footer.png"
-              alt="BAPS logo"
-              width={250}
-              height={250}
-              className="object-contain"
-            />
-          </div>
+          <Image
+            aria-hidden="true"
+            src="/footer.png"
+            alt="BAPS logo"
+            width={250}
+            height={250}
+            className="object-contain"
+          />
           Visit BAPS.org
         </a>
         <p className="text-xs text-gray-400">
